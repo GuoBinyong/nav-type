@@ -352,10 +352,6 @@ type NavFilterTest = (this: History, currentValue: NavObject, index: number, arr
 
 
 
-//配置属性：结束
-
-
-
 /**
  * 获取 this 值，本方法确定获取的this值一定是 History 的实例
  * @param History
