@@ -1,3 +1,9 @@
+import "es-expand"
+import "bom-expand"
+// import {isEqualOfJSON} from "com-tools"  //改用 lodash 的 isEqual
+import {isEqual} from "lodash"
+
+
 /**
  * 导航类型标识符常量
  */
@@ -31,6 +37,7 @@ let propertyDescriptors = {
    * navObject.name ? : string   本次导航的名字
    */
   navList:{
+    configurable:true,
     enumerable:false,
     get:function(){
       if (!this._navList) {
@@ -53,6 +60,7 @@ let propertyDescriptors = {
    * maxNavIndex : number   当前最大的导航索引 navIndex
    */
   maxNavIndex:{
+    configurable:true,
     enumerable:false,
     get:function(){
       return this.navList.length - 1;
@@ -64,6 +72,7 @@ let propertyDescriptors = {
    * currNavIndex : number    当前的慎用索引 ；
    */
   currNavIndex:{
+    configurable:true,
     enumerable:false,
     get:function(){
       if (this._currNavIndex == undefined) {
@@ -88,6 +97,7 @@ let propertyDescriptors = {
    * 当 给 navType 设置为 null 时，将自动根据 currNavIndex 和 oldNavIndex 来计算，
    */
   navType:{
+    configurable:true,
     enumerable:false,
     get:function(){
       if  (this._navType != undefined){
@@ -125,6 +135,7 @@ let propertyDescriptors = {
    * oldLength : number   表示上一次 length 的长度
    */
   oldLength:{
+    configurable:true,
     enumerable:false,
     get:function(){
       if  (this._oldLength == undefined){
@@ -156,6 +167,7 @@ let propertyDescriptors = {
    * navInfo.arguments ? : Arguments || Array   描述本次导航的参数
    */
   navInfo:{
+    configurable:true,
     enumerable:false,
     get: function () {
       if (!this._navInfo) {
@@ -192,21 +204,22 @@ let propertyDescriptors = {
    * popstate事件的监听器
    */
   _popstateEventListener:{
+    configurable:true,
     get:function(){
-      
+
       var _this = getThisOfHistory(this);
       if (!_this._popstateEventListener_){
 
         _this._popstateEventListener_ = function(event) {
           let navList = _this.navList ;
-        
+
           let nav = {url:location.href};
-        
+
           let state = event.state;
           if (state != undefined) {
             nav.state = state ;
           }
-        
+
           _this._parseNavOfGo(nav);
         };
 
@@ -231,7 +244,7 @@ Object.defineProperties(History.prototype,propertyDescriptors);
 
 /**
  * 获取 this 值，本方法确定获取的this值一定是 History 的实例
- * @param History 
+ * @param History
  */
 function getThisOfHistory(thisValue){
   return thisValue instanceof History ? thisValue : history ;
@@ -297,7 +310,7 @@ function createPushState(oriPushState){
 
     _this.oldLength = _this.length;
     _this.navArguments = arguments;
-  
+
     oriPushState.apply(_this,arguments);
     _this._parseNavOfPush({state:arguments[0],title:arguments[1],url:arguments[2]});
   };
@@ -323,7 +336,7 @@ function createReplaceState(oriReplaceState){
 
 /**
  *替换 History 实例的原生方法，会替换以下方法：back、、forward、go、pushState、replaceState
- * 
+ *
  * @author 郭斌勇
  * @param {History} historyInst
  */
@@ -334,6 +347,7 @@ function replaceNativeMethodOf(historyInst) {
 
   let repOriMethodProperties = {
     back: {
+      configurable:true,
       get: function () {
         var _this = getThisOfHistory(this);
         if (!_this._back) {
@@ -351,6 +365,7 @@ function replaceNativeMethodOf(historyInst) {
 
 
     forward: {
+      configurable:true,
       get: function () {
         var _this = getThisOfHistory(this);
         if (!_this._forward) {
@@ -371,6 +386,7 @@ function replaceNativeMethodOf(historyInst) {
 
 
     go: {
+      configurable:true,
       get: function () {
         var _this = getThisOfHistory(this);
         if (!_this._go) {
@@ -390,6 +406,7 @@ function replaceNativeMethodOf(historyInst) {
 
 
     pushState: {
+      configurable:true,
       get: function () {
         var _this = getThisOfHistory(this);
         if (!_this._pushState) {
@@ -409,6 +426,7 @@ function replaceNativeMethodOf(historyInst) {
 
 
     replaceState: {
+      configurable:true,
       get: function () {
         var _this = getThisOfHistory(this);
         if (!_this._replaceState) {
@@ -435,7 +453,7 @@ function replaceNativeMethodOf(historyInst) {
 /**
  * 为了防止 webview 外壳（加过webview的应用程序，如：打开生活号的支付宝、打开公众号的微信、包壳的应用app等）对 webview 中的 history 实例的改造影响到 本工具实现的 导航工能
  * 需要 单独对 webview 默认创建的 History 实例 history 单独进行下方式替换；
- * 
+ *
  * 又因为在进行方法替换时，会选获取替换对象的原方法
  * 所以，如果 先对 History.prototype 进行替换，则，当再对 history 进行替换时，在获取原方法时 有可能会获取到 History.prototype 中已被替换后的方法，这就会使得 webview 外壳 对 history 改变的 方法丢失；
  * 所以，需要 先对 history 方法进行替换，然后再对 History.prototype 方法进行替换；
@@ -635,7 +653,7 @@ History.prototype._parseNavOfGoWithout = function _parseNavOfGoWithout(nav){
 
   let navIndex = this.nearestNavIndex(function (navItem,index,arr) {
     return nav.isSubsetOf(navItem,function(a,b){
-      return isEqualOfJSON(a,b);
+      return isEqual(a,b);
     });
   });
 
@@ -742,7 +760,7 @@ History.prototype._configNavData = function _configNavData(){
 //工具方法：开始
 
 /**
- * 根据 isSubsetOf 和 isEqualOfJSON 来查找 navList 中所有匹配 nav 的索引
+ * 根据 isSubsetOf 和 isEqual 来查找 navList 中所有匹配 nav 的索引
  * @param nav : Nav  导航对象
  * @returns [Index]   所有匹配的索引
  */
@@ -750,7 +768,7 @@ History.prototype.matchedIndexs = function matchedIndexs(nav){
 
   return this.navList.filterIndexs(function (navItem) {
     return nav.isSubsetOf(navItem,function(a,b){
-      return isEqualOfJSON(a,b);
+      return isEqual(a,b);
     });
   },this);
 
