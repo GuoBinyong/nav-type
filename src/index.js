@@ -1,7 +1,5 @@
 import "es-expand"
 import "bom-expand"
-// import {isEqualOfJSON} from "com-tools"  //改用 lodash 的 isEqual
-import {isEqual} from "lodash"
 
 
 /**
@@ -653,7 +651,7 @@ History.prototype._parseNavOfGoWithout = function _parseNavOfGoWithout(nav){
 
   let navIndex = this.nearestNavIndex(function (navItem,index,arr) {
     return nav.isSubsetOf(navItem,function(a,b){
-      return isEqual(a,b);
+      return Object.isDepthEqual(a,b);
     });
   });
 
@@ -760,7 +758,7 @@ History.prototype._configNavData = function _configNavData(){
 //工具方法：开始
 
 /**
- * 根据 isSubsetOf 和 isEqual 来查找 navList 中所有匹配 nav 的索引
+ * 根据 isSubsetOf 和 Object.isDepthEqual 来查找 navList 中所有匹配 nav 的索引
  * @param nav : Nav  导航对象
  * @returns [Index]   所有匹配的索引
  */
@@ -768,7 +766,7 @@ History.prototype.matchedIndexs = function matchedIndexs(nav){
 
   return this.navList.filterIndexs(function (navItem) {
     return nav.isSubsetOf(navItem,function(a,b){
-      return isEqual(a,b);
+      return Object.isDepthEqual(a,b);
     });
   },this);
 

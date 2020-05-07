@@ -1,15 +1,15 @@
 {
-  "name": "nav-info",
+  "name": "nav-type",
   "version": "1.0.0",
-  "description": "nav-info 对 History 进行了扩展，使其能标识出导航的类型（如：back、forward、push、replace、load等）并提供更多的导航信息",
-  "main": "dist/nav-info.cjs.js",
-  "module": "dist/nav-info.ems.js",
-  "browser": "dist/nav-info.umd.js",
+  "description": "nav-type 对 History 进行了扩展，使其能标识出导航的类型（如：back、forward、push、replace、load等）并提供更多的导航信息",
+  "main": "dist/nav-type.cjs.js",
+  "module": "dist/nav-type.ems.js",
+  "browser": "dist/nav-type.umd.js",
   "types": "types/index.d.ts",
   "sideEffects": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/GuoBinyong/nav-info"
+    "url": "https://github.com/GuoBinyong/nav-type"
   },
   "keywords": [
     "history",
@@ -19,8 +19,10 @@
     "导航",
     "information",
     "navigation information",
+    "nav info",
     "导航信息",
     "navigation type",
+    "nav type",
     "导航类型",
     "navigation identity",
     "导航标识",
@@ -66,7 +68,7 @@
     "rollup-plugin-babel": "^4.2.0"
   },
   "dependencies": {
-    "es-expand": "^1.0.11",
-    "lodash": "^4.17.15"
+    "bom-expand": "^1.0.6",
+    "es-expand": "^1.0.12"
   }
 }
