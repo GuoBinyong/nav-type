@@ -179,8 +179,8 @@ let propertyDescriptors = {
         };
 
         let navArguments = this.navArguments;
-        if  (this.navArguments){
-          _navInfo.arguments = this.navArguments;
+        if  (navArguments){
+          _navInfo.arguments = navArguments;
         }
 
 
@@ -209,7 +209,6 @@ let propertyDescriptors = {
       if (!_this._popstateEventListener_){
 
         _this._popstateEventListener_ = function(event) {
-          let navList = _this.navList ;
 
           let nav = {url:location.href};
 
@@ -310,7 +309,7 @@ function createPushState(oriPushState){
     _this.navArguments = arguments;
 
     oriPushState.apply(_this,arguments);
-    _this._parseNavOfPush({state:arguments[0],title:arguments[1],url:arguments[2]});
+    _this._parseNavOfPush({state:state,title:title,url:url});
   };
 }
 
@@ -327,7 +326,7 @@ function createReplaceState(oriReplaceState){
     }
     _this.navArguments = arguments;
     oriReplaceState.apply(_this,arguments);
-    _this._parseNavOfReplace({state:arguments[0],title:arguments[1],url:arguments[2]});
+    _this._parseNavOfReplace({state:state,title:title,url:url});
   };
 }
 
