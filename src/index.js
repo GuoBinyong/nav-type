@@ -1,5 +1,6 @@
-import "es-expand"
+// import "es-expand"
 import "bom-expand"
+import {isDepthEqual} from "deep-tls"
 
 
 /**
@@ -650,7 +651,7 @@ History.prototype._parseNavOfGoWithout = function _parseNavOfGoWithout(nav){
 
   let navIndex = this.nearestNavIndex(function (navItem,index,arr) {
     return nav.isSubsetOf(navItem,function(a,b){
-      return Object.isDepthEqual(a,b);
+      return isDepthEqual(a,b);
     });
   });
 
@@ -757,7 +758,7 @@ History.prototype._configNavData = function _configNavData(){
 //工具方法：开始
 
 /**
- * 根据 isSubsetOf 和 Object.isDepthEqual 来查找 navList 中所有匹配 nav 的索引
+ * 根据 isSubsetOf 和 isDepthEqual 来查找 navList 中所有匹配 nav 的索引
  * @param nav : Nav  导航对象
  * @returns [Index]   所有匹配的索引
  */
@@ -765,7 +766,7 @@ History.prototype.matchedIndexs = function matchedIndexs(nav){
 
   return this.navList.filterIndexs(function (navItem) {
     return nav.isSubsetOf(navItem,function(a,b){
-      return Object.isDepthEqual(a,b);
+      return isDepthEqual(a,b);
     });
   },this);
 
