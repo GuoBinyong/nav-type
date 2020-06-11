@@ -3,9 +3,10 @@
   "version": "1.0.2",
   "description": "nav-type 对 History 进行了扩展，使其能标识出导航的类型（如：back、forward、push、replace、load等）并提供更多的导航信息",
   "main": "dist/nav-type.cjs.js",
-  "module": "dist/nav-type.ems.js",
+  "module": "dist/nav-type.em.js",
   "types": "types/index.d.ts",
   "sideEffects": true,
+  "homepage": "https://github.com/GuoBinyong/nav-type#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/GuoBinyong/nav-type"
@@ -58,11 +59,13 @@
     "@rollup/plugin-node-resolve": "^7.1.3",
     "eslint": "^7.0.0",
     "package-tls": "^1.0.2",
-    "rollup": "^2.7.2"
+    "rollup": "^2.7.2",
+    "rollup-plugin-terser": "^6.1.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.9.6",
-    "bom-expand": "^1.0.11",
-    "es-expand": "^1.0.16"
+    "bom-expand": "^1.0.12",
+    "deep-tls": "^1.0.0",
+    "es-expand": "^2.0.0"
   }
 }

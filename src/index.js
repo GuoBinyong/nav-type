@@ -1,6 +1,10 @@
-// import "es-expand"
+/*
+用到了 es-expand 中的如下内容：
+- Math.distanceSort
+*/
+import "es-expand"
 import "bom-expand"
-import {isDepthEqual} from "deep-tls"
+import {isDeepEqual} from "deep-tls"
 
 
 /**
@@ -649,9 +653,9 @@ History.prototype._parseNavOfGoWithout = function _parseNavOfGoWithout(nav){
   * 当 navList 中的元素大于或等于2个时，查找navList中与nav最近的匹配项
   * */
 
-  let navIndex = this.nearestNavIndex(function (navItem,index,arr) {
+  let navIndex = this.nearestNavIndex(function (navItem) {
     return nav.isSubsetOf(navItem,function(a,b){
-      return isDepthEqual(a,b);
+      return isDeepEqual(a,b);
     });
   });
 
@@ -758,7 +762,7 @@ History.prototype._configNavData = function _configNavData(){
 //工具方法：开始
 
 /**
- * 根据 isSubsetOf 和 isDepthEqual 来查找 navList 中所有匹配 nav 的索引
+ * 根据 isSubsetOf 和 isDeepEqual 来查找 navList 中所有匹配 nav 的索引
  * @param nav : Nav  导航对象
  * @returns [Index]   所有匹配的索引
  */
@@ -766,7 +770,7 @@ History.prototype.matchedIndexs = function matchedIndexs(nav){
 
   return this.navList.filterIndexs(function (navItem) {
     return nav.isSubsetOf(navItem,function(a,b){
-      return isDepthEqual(a,b);
+      return isDeepEqual(a,b);
     });
   },this);
 
