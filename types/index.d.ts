@@ -1,13 +1,13 @@
 
 
 
-type NavFilterTest = (this: History, currentValue: NavObject, index: number, arr: NavObject[]) => any
+declare type NavFilterTest = (this: History, currentValue: NavObject, index: number, arr: NavObject[]) => any
 
 
 
 
 
-type NavType = "back" | "forward" | "push" | "replace" | "load" | "unknown"
+declare type NavType = "back" | "forward" | "push" | "replace" | "load" | "unknown"
 
 
 

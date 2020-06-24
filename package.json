@@ -39,7 +39,7 @@
     "load"
   ],
   "author": "郭斌勇",
-  "license": "ISC",
+  "license": "MIT",
   "files": [
     "dist/[^.]*",
     "types/[^.]*"
@@ -64,8 +64,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.6",
-    "bom-expand": "^1.0.12",
-    "deep-tls": "^1.0.0",
-    "es-expand": "^2.0.0"
+    "bom-expand": "^1.0.13",
+    "deep-tls": "^2.0.1",
+    "es-expand": "^2.4.0"
   }
 }
